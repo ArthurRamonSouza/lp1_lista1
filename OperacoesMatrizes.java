@@ -20,26 +20,130 @@ import java.util.InputMismatchException;
 
 public class OperacoesMatrizes {
 
-  private static double temp;
-  static Scanner scan = new Scanner(System.in);
-  
-  //private static double[][] Matriz;
-  
   public static void start() {
-    for(int i = 0; i < 3; i++) {
-      System.out.println(recebe_Valor() + "\n");
+  double[][] matriz = new double[3][3];
+    // lendo a matriz
+      for (int l = 0; l < 3; l++) {
+      for (int c = 0; c < 3; c++) {
+        recebe_Valor(l, c, matriz);
+      }
     }
+
+    System.out.println();
+
+    // printando a matriz
+    System.out.println("Sua matriz é esta: ");
+    for (int l = 0; l < 3; l++) {
+      for (int c = 0; c < 3; c++) {
+        if (c == 0 && l != 0) {
+          System.out.println();
+        }
+        System.out.print(matriz[l][c]);
+        if (c != 2) {
+          System.out.print(", ");
+        }
+      }
+    }
+    System.out.println();
+    System.out.println();
+    
+    mediaAbaixoDaDiagonal(matriz);
+    somaAcimaDaDiagonalPrincipal(matriz);
+    mediaDaDiagonalPrincipal(matriz);
+    menorElementoDaMatriz(matriz);
+    somaDaMatriz(matriz);
+  }
+  
+  public static void mediaAbaixoDaDiagonal(double[][] matriz) {
+    // a media dos elementos abaixo da diagonal principal
+    double mediaAbaixoDiagonal = 0;
+    int qtdElementos = 0;
+    
+    for (int l = 1; l < 3; l++) {
+      for (int c = 0; c < 3; c++) {
+        if (c >= l) {
+          break;
+        } else {
+          mediaAbaixoDiagonal += matriz[l][c];
+          qtdElementos++;
+        }
+      }
+    }
+    mediaAbaixoDiagonal /= qtdElementos;
+    System.out.printf("A media dos elementos abaixo da diagonal principal é: %.2f\n\n", mediaAbaixoDiagonal);
   }
 
-  public static double recebe_Valor() {
+  public static void somaAcimaDaDiagonalPrincipal(double[][] matriz) {
+    // a soma dos elementos acima da diagonal principal
+    double somaAcimaDiagonal = 0;
+    
+    for (int l = 0; l < 3; l++) {
+      for (int c = 0; c < 3; c++) {
+        if (c > l) {
+          somaAcimaDiagonal += matriz[l][c];
+        }
+      }
+    }
+    System.out.printf("A soma dos elementos acima da diagonal principal é: %.2f\n\n", somaAcimaDiagonal);
+  }
+
+  public static void mediaDaDiagonalPrincipal(double[][] matriz) {
+    // a media dos elementos da diagonal principal
+    double mediaDiagonal = 0;
+    int qtdElementos = 0;
+
+    for (int l = 0; l < 3; l++) {
+      for (int c = 0; c < 3; c++) {
+        if (c == l) {
+          mediaDiagonal += matriz[l][c];
+          qtdElementos++;
+        }
+      }
+    }
+  
+    mediaDiagonal /= qtdElementos;
+    System.out.printf("A media dos elementos da diagonal principal é: %.2f\n\n", mediaDiagonal);
+  }
+
+  public static void menorElementoDaMatriz(double[][] matriz) {
+    // o menor elemento da matriz
+    double menorElemento = 0;
+    menorElemento = matriz[0][0];
+    
+    for (int l = 0; l < 3; l++) {
+      for (int c = 0; c < 3; c++) {
+        if (matriz[l][c] < menorElemento) {
+          matriz[l][c] = menorElemento;
+        }
+      }
+    }
+    System.out.printf("O menor elemento da matriz é: %.2f\n\n", menorElemento);
+  }
+
+  public static void somaDaMatriz(double[][] matriz) {
+    // a soma dos elementos da matriz
+    double somaMatriz = 0;
+    
+    for (int l = 0; l < 3; l++) {
+      for (int c = 0; c < 3; c++) {
+        somaMatriz += matriz[l][c];
+      }
+    }
+    System.out.printf("A soma de todos os elementos da matriz é: %.2f\n\n", somaMatriz);
+
+  }
+
+  public static void recebe_Valor(int line, int column, double [][] matriz) {
+    Scanner scan = new Scanner(System.in);
     try {
-      temp = scan.nextDouble();
-      return temp;
-    } catch(InputMismatchException erro) {
+      System.out.printf("Digite o elemento que estará na posição a(%d,%d); ", line + 1, column + 1);
+      matriz[line][column] = scan.nextDouble();
+      
+    } catch (InputMismatchException erro) {
       scan.nextLine();
       System.out.println("Insira um valor adequado.");
-      
-      return recebe_Valor();
+      recebe_Valor(line, column, matriz);
     }
   }
+  
 }

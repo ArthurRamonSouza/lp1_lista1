@@ -24,7 +24,6 @@ class Main {
     // PontosDoQuadrante.start();
     // CalculadoraAvancada.start();
     // MiniProntuario.start();
-    //OperacoesMatrizes.start();
-    teste.start();
+    OperacoesMatrizes.start();
   }
 }
