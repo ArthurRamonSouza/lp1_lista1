@@ -21,11 +21,12 @@ import java.util.InputMismatchException;
 public class OperacoesMatrizes {
 
   public static void start() {
-  double[][] matriz = new double[3][3];
+    double[][] matriz = new double[3][3];
+    Scanner scan = new Scanner(System.in);
     // lendo a matriz
-      for (int l = 0; l < 3; l++) {
+    for (int l = 0; l < 3; l++) {
       for (int c = 0; c < 3; c++) {
-        recebe_Valor(l, c, matriz);
+        recebe_Valor(l, c, matriz, scan);
       }
     }
 
@@ -46,19 +47,20 @@ public class OperacoesMatrizes {
     }
     System.out.println();
     System.out.println();
-    
+
     mediaAbaixoDaDiagonal(matriz);
     somaAcimaDaDiagonalPrincipal(matriz);
     mediaDaDiagonalPrincipal(matriz);
     menorElementoDaMatriz(matriz);
     somaDaMatriz(matriz);
+    scan.close();
   }
-  
+
   public static void mediaAbaixoDaDiagonal(double[][] matriz) {
     // a media dos elementos abaixo da diagonal principal
     double mediaAbaixoDiagonal = 0;
     int qtdElementos = 0;
-    
+
     for (int l = 1; l < 3; l++) {
       for (int c = 0; c < 3; c++) {
         if (c >= l) {
@@ -76,7 +78,7 @@ public class OperacoesMatrizes {
   public static void somaAcimaDaDiagonalPrincipal(double[][] matriz) {
     // a soma dos elementos acima da diagonal principal
     double somaAcimaDiagonal = 0;
-    
+
     for (int l = 0; l < 3; l++) {
       for (int c = 0; c < 3; c++) {
         if (c > l) {
@@ -100,20 +102,19 @@ public class OperacoesMatrizes {
         }
       }
     }
-  
+
     mediaDiagonal /= qtdElementos;
     System.out.printf("A media dos elementos da diagonal principal é: %.2f\n\n", mediaDiagonal);
   }
 
   public static void menorElementoDaMatriz(double[][] matriz) {
     // o menor elemento da matriz
-    double menorElemento = 0;
-    menorElemento = matriz[0][0];
-    
+    double menorElemento = matriz[0][0];
+
     for (int l = 0; l < 3; l++) {
       for (int c = 0; c < 3; c++) {
         if (matriz[l][c] < menorElemento) {
-          matriz[l][c] = menorElemento;
+          menorElemento = matriz[l][c];
         }
       }
     }
@@ -123,7 +124,7 @@ public class OperacoesMatrizes {
   public static void somaDaMatriz(double[][] matriz) {
     // a soma dos elementos da matriz
     double somaMatriz = 0;
-    
+
     for (int l = 0; l < 3; l++) {
       for (int c = 0; c < 3; c++) {
         somaMatriz += matriz[l][c];
@@ -133,17 +134,16 @@ public class OperacoesMatrizes {
 
   }
 
-  public static void recebe_Valor(int line, int column, double [][] matriz) {
-    Scanner scan = new Scanner(System.in);
+  public static void recebe_Valor(int line, int column, double[][] matriz, Scanner scan) {
     try {
       System.out.printf("Digite o elemento que estará na posição a(%d,%d); ", line + 1, column + 1);
       matriz[line][column] = scan.nextDouble();
-      
+
     } catch (InputMismatchException erro) {
       scan.nextLine();
       System.out.println("Insira um valor adequado.");
-      recebe_Valor(line, column, matriz);
+      recebe_Valor(line, column, matriz, scan);
     }
   }
-  
+
 }
